@@ -1,0 +1,14 @@
+rsync output common: 
+	>f+++++++++ filenew3.txt
+	>f+++++++++ filenew4.txt
+
+rsync output worker: 
+	>f+++++++++ file10.txt
+	>f+++++++++ file9.txt
+
+rsync output templates: 
+	>f+++++++++ file7.txt
+	>f+++++++++ file8.txt
+	>f+++++++++ new_dir/file11.txt
+	>f+++++++++ new_dir/newdir2/file12.txt
+

@@ -1,0 +1,9 @@
+{
+  "variable": 
+  {
+	  "primary_coordinator" : "value_pc",
+	  "secondary_coordinator" : "value_sc",
+	  "worker" : "value_worker"
+  },
+  "hostname" : {}
+}
