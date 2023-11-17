@@ -92,3 +92,21 @@ def filter_rsync_output(rsync_output):
     if not indented_rsync_output:
         return "\tNo files synced"
     return indented_rsync_output
+    
+def get_directory_permissions(directory_path):
+    """
+    Gets the mode, UID, and GID of a directory.
+
+    Args:
+        directory_path (str): The path to the directory.
+
+    Returns:
+        tuple: A tuple containing the mode, UID, and GID of the directory.
+    """
+
+    directory_stats = os.stat(directory_path)
+    mode = directory_stats.st_mode
+    uid = directory_stats.st_uid
+    gid = directory_stats.st_gid
+
+    return (mode, uid, gid)

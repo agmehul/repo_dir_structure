@@ -6,27 +6,37 @@ import datetime
 
 base_dir = "/mnt/c/Users/mehul/OneDrive/Desktop/notepad-plus-dump"
 
+#defining paths to relevant directories and files
+source_dir = os.path.join(base_dir, "apps/edp/chef_workstation")
+mode, uid, gid = f.get_directory_permissions(source_dir)
+dest_dir = os.path.join(base_dir, "apps")
+sub_dir = "edp"
+delete_info_file=os.path.join(base_dir, "apps/edp/chef_workstation/delete_info.json")
+role_info_file=os.path.join(base_dir, "apps/edp/chef_workstation/role_info.json")
+mapping_info_file=os.path.join(base_dir, "apps/edp/chef_workstation/templates/mapping.json")
+
 #logging
 now = datetime.datetime.now()
 log_file_name = now.strftime("%Y-%m-%d_%H-%M-%S.log")
 log_directory = os.path.join(base_dir, "apps/edp/chef_workstation/chef_logs")
 if not os.path.exists(log_directory):
     os.makedirs(log_directory)
+    # Set the permissions and ownership of the log directory
+    os.chmod(log_directory, mode)
+    os.chown(log_directory, uid, gid)
+    
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
-fh = logging.FileHandler(os.path.join(log_directory, log_file_name))
+log_file = os.path.join(log_directory, log_file_name)
+with open(log_file, 'w') as lf:
+    pass 
+os.chmod(log_file, mode)
+os.chown(log_file, uid, gid)
+fh = logging.FileHandler(log_file)
 fh.setLevel(logging.INFO)
 formatter = logging.Formatter("%(message)s\n")
 fh.setFormatter(formatter)
 logger.addHandler(fh)
-
-#defining paths to relevant directories and files
-source_dir = os.path.join(base_dir, "apps/edp/chef_workstation")
-dest_dir = os.path.join(base_dir, "apps")
-sub_dir = "edp"
-delete_info_file=os.path.join(base_dir, "apps/edp/chef_workstation/delete_info.json")
-role_info_file=os.path.join(base_dir, "apps/edp/chef_workstation/role_info.json")
-mapping_info_file=os.path.join(base_dir, "apps/edp/chef_workstation/templates/mapping.json")
 
 rsync_options = "-rlpgoDcvi"
 
