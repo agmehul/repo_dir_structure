@@ -66,28 +66,22 @@ if role == "worker":
 # Process templates sub_dir contents
 templates_dir = os.path.join(source_dir, "templates", sub_dir)
 parsed_templates_dir = os.path.join(source_dir, "parsed_templates", sub_dir)
-if not os.path.exists(parsed_templates_dir):
-    os.makedirs(parsed_templates_dir)
+if os.path.exists(parsed_templates_dir):
+    shutil.rmtree(parsed_templates_dir)
+shutil.copytree(templates_dir, parsed_templates_dir)
 
-for root, directories, files in os.walk(templates_dir):
-    for directory in directories:
-        relative_path = os.path.relpath(os.path.join(root, directory), templates_dir)
-        parsed_dir_path = os.path.join(parsed_templates_dir, relative_path)
-        if not os.path.exists(parsed_dir_path):
-            os.makedirs(parsed_dir_path)
+for root, directories, files in os.walk(parsed_templates_dir):
     for filename in files:
-        relative_path = os.path.relpath(os.path.join(root, filename), templates_dir)
-        source_template_file = os.path.join(templates_dir, relative_path)
-        destination_file = os.path.join(parsed_templates_dir, relative_path)
+        template_file = os.path.join(root, filename)
 
         # Replace variables in the template file
-        replaced_template_content = f.replace_variables(source_template_file, mapping_info_file, role_info_file)
+        replaced_template_content = f.replace_variables(template_file, mapping_info_file, role_info_file)
         # Write the replaced template content to the destination file
-        with open(destination_file, "w") as file:
+        with open(template_file, "w") as file:
             file.write(replaced_template_content)
 
 # Sync the parsed template directory to the destination directory
 rsync_output_templates = f.sync_files(parsed_templates_dir, dest_sub_dir, rsync_options)
 logger.info("rsync output templates: \n%s", f.filter_rsync_output(rsync_output_templates))
-shutil.rmtree(os.path.join(source_dir, "parsed_templates"))
+#shutil.rmtree(os.path.join(source_dir, "parsed_templates"))
 
