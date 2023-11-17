@@ -110,3 +110,13 @@ def get_directory_permissions(directory_path):
     gid = directory_stats.st_gid
 
     return (mode, uid, gid)
+
+def set_permissions_recursively(root_dir, mode, uid, gid):
+    for root, dirs, files in os.walk(root_dir):
+        os.chmod(root, mode)
+        os.chown(root, uid, gid)
+
+        for filename in files:
+            filepath = os.path.join(root, filename)
+            os.chmod(filepath, mode)
+            os.chown(filepath, uid, gid)

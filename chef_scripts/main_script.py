@@ -89,7 +89,7 @@ for root, directories, files in os.walk(parsed_templates_dir):
         # Write the replaced template content to the destination file
         with open(template_file, "w") as file:
             file.write(replaced_template_content)
-
+f.set_permissions_recursively(os.path.join(source_dir, "parsed_templates"), mode, uid, gid)
 # Sync the parsed template directory to the destination directory
 rsync_output_templates = f.sync_files(parsed_templates_dir, dest_sub_dir, rsync_options)
 logger.info("rsync output templates: \n%s", f.filter_rsync_output(rsync_output_templates))
