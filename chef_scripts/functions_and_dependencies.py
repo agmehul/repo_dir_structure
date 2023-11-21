@@ -107,21 +107,21 @@ def parse_template(template_file, role):
     template_content = template_content.replace("<hostname>", hostname)
     parsed_content = ''
     role_specific_content = None
-    content_role = None
+    content_roles = None
     in_role_section = False
     for line in template_content.splitlines():
-        if line.startswith('<role'):
+        if line.startswith('<roles'):
             role_specific_content = ''
             in_role_section = True
-            start_index = line.find("\"") + 1
-            end_index = line.rfind("\"")
-            content_role = line[start_index:end_index]
+            start_index = line.find("[")
+            end_index = line.rfind("]")
+            content_roles = line[start_index:end_index+1]
         elif line.startswith('<end>'):
-            if role == content_role:
+            if role in content_roles:
                 parsed_content += role_specific_content
             role_specific_content = None
             in_role_section = False
-            content_role = None
+            content_roles = None
         elif in_role_section:
             role_specific_content += line + '\n'
         else:
