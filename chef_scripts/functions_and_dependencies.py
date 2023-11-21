@@ -25,31 +25,6 @@ def get_mapping_info(mapping_file):
         #print(mapping.items())
         return mapping
 
-def replace_variables(template_file, mapping_file, role_info_file):
-    """Replaces the variables in the given template file with the appropriate values based on the mapping file."""
-    mapping_info = get_mapping_info(mapping_file)
-    hostname = get_hostname()
-    role = get_role(hostname, role_info_file)
-
-    with open(template_file, "r") as f:
-        template_content = f.read()
-
-    for variable_key, replacement_values in mapping_info.items():
-        if variable_key == "hostname":
-            replacement_value = hostname
-        else:
-            if not role:
-                raise KeyError(f"Unable to determine role for hostname '{hostname}'.")
-
-            replacement_value = replacement_values.get(role)
-
-        if not replacement_value:
-            raise KeyError(f"Variable '{variable_key}' is not defined for role '{role}'.")
-
-        template_content = template_content.replace("{{" + variable_key + "}}", replacement_value)
-
-    return template_content
-
 def sync_files(source_dir, destination_dir, rsync_options):
     """Synchronizes the files from the source directory to the destination directory using the given rsync options."""
     return subprocess.check_output(["rsync", rsync_options, source_dir+"/", destination_dir])
@@ -120,3 +95,35 @@ def set_permissions_recursively(root_dir, mode, uid, gid):
             filepath = os.path.join(root, filename)
             os.chmod(filepath, mode)
             os.chown(filepath, uid, gid)
+            
+def getTemplateRoles(template_file, mapping_role_file):
+    mapping_role_info = get_mapping_info(mapping_role_file)
+    return mapping_role_info.get(template_file)
+    
+def parse_template(template_file, role):
+    with open(template_file, 'r') as f:
+        template_content = f.read()
+    hostname = get_hostname()
+    template_content = template_content.replace("<hostname>", hostname)
+    parsed_content = ''
+    role_specific_content = None
+    content_role = None
+    in_role_section = False
+    for line in template_content.splitlines():
+        if line.startswith('<role'):
+            role_specific_content = ''
+            in_role_section = True
+            start_index = line.find("\"") + 1
+            end_index = line.rfind("\"")
+            content_role = line[start_index:end_index]
+        elif line.startswith('<end>'):
+            if role == content_role:
+                parsed_content += role_specific_content
+            role_specific_content = None
+            in_role_section = False
+            content_role = None
+        elif in_role_section:
+            role_specific_content += line + '\n'
+        else:
+            parsed_content += line + '\n'
+    return parsed_content

@@ -14,6 +14,7 @@ sub_dir = "edp"
 delete_info_file=os.path.join(base_dir, "apps/edp/chef_workstation/delete_info.json")
 role_info_file=os.path.join(base_dir, "apps/edp/chef_workstation/role_info.json")
 mapping_info_file=os.path.join(base_dir, "apps/edp/chef_workstation/templates/mapping.json")
+mapping_role_file=os.path.join(base_dir, "apps/edp/chef_workstation/templates/mapping_template_roles.json")
 
 #logging
 now = datetime.datetime.now()
@@ -82,13 +83,17 @@ shutil.copytree(templates_dir, parsed_templates_dir)
 
 for root, directories, files in os.walk(parsed_templates_dir):
     for filename in files:
-        template_file = os.path.join(root, filename)
+        template_roles = f.getTemplateRoles(filename, mapping_role_file)
+        if (not template_roles) or (role in template_roles):
+            template_file = os.path.join(root, filename)
 
-        # Replace variables in the template file
-        replaced_template_content = f.replace_variables(template_file, mapping_info_file, role_info_file)
-        # Write the replaced template content to the destination file
-        with open(template_file, "w") as file:
-            file.write(replaced_template_content)
+            # Replace variables in the template file
+            replaced_template_content = f.parse_template(template_file, role)
+            # Write the replaced template content to the destination file
+            with open(template_file, "w") as file:
+                file.write(replaced_template_content)
+        else:
+            os.remove(os.path.join(root, filename))
 f.set_permissions_recursively(os.path.join(source_dir, "parsed_templates"), mode, uid, gid)
 # Sync the parsed template directory to the destination directory
 rsync_output_templates = f.sync_files(parsed_templates_dir, dest_sub_dir, rsync_options)
