@@ -61,7 +61,7 @@ def filter_rsync_output(rsync_output):
     # Compile a regular expression to match newline characters
     newline_regex = re.compile(r'\n')
     rsync_output = newline_regex.sub(r'\n', rsync_output)
-    filename_regex = re.compile(r'^>')
+    filename_regex = re.compile(r'^[>|<|*]')
     filtered_lines = ["\t" + line for line in rsync_output.split('\n') if filename_regex.search(line)]
     indented_rsync_output = '\n'.join(filtered_lines)
     if not indented_rsync_output:
@@ -100,11 +100,19 @@ def getTemplateRoles(template_file, mapping_role_file):
     mapping_role_info = get_mapping_info(mapping_role_file)
     return mapping_role_info.get(template_file)
     
-def parse_template(template_file, role):
+def parse_template(template_file, role, mapping_file2):
     with open(template_file, 'r') as f:
         template_content = f.read()
-    hostname = get_hostname()
-    template_content = template_content.replace("<hostname>", hostname)
+    # Load JSON data
+    with open(mapping_file2) as f:
+      replacements = json.load(f)
+
+    # Build replacement dict with formatted keys
+    formatted_replacements = {f"<{key}>": value for key, value in replacements.items()}
+
+    # Replace keys in template content
+    for key, value in formatted_replacements.items():
+        template_content = template_content.replace(key, value)
     parsed_content = ''
     role_specific_content = None
     content_roles = None
@@ -127,3 +135,51 @@ def parse_template(template_file, role):
         else:
             parsed_content += line + '\n'
     return parsed_content
+    
+def rsync_sync_directories(source_dir, target_dir, exclude_file, current_role, hostname, rsync_options):
+  """
+  Synchronizes two directories using rsync and deletes extra files in the target directory based on role-specific inclusions.
+
+  Args:
+    source_dir: Path to the source directory.
+    target_dir: Path to the target directory.
+    exclude_file: Path to the JSON file containing role-based exclusions.
+  """
+
+  # Read exclusion patterns from JSON file
+  with open(exclude_file) as f:
+    exclusions = json.load(f)
+
+  # Build exclude options dynamically
+  exclude_options = ""
+  for filename, roles in exclusions.items():
+    if current_role in roles:
+      exclude_options += f"--exclude={filename} "
+    elif hostname in roles:
+      exclude_options += f"--exclude={filename} "
+      
+
+  # Combine options with source and target paths
+  source_dir = source_dir + "/"
+  rsync_command = f"rsync {rsync_options} {exclude_options} --delete  {source_dir} {target_dir}"
+
+  # Execute rsync command with subprocess
+  print(f"Running rsync command: {rsync_command}")
+  return subprocess.check_output(rsync_command.split())
+
+  print("Synchronization complete!")
+  
+def add_key_value_pair(json_file, value, key="my_key"):
+  """
+  Adds a key-value pair to a JSON file.
+
+  Args:
+    json_file: Path to the JSON file.
+    value: The value to be added.
+    key (optional): The key for the value (defaults to "my_key").
+  """
+  with open(json_file, "r+") as f:
+    data = json.load(f)
+    data.update({key: value})
+    f.seek(0)
+    json.dump(data, f, indent=4)

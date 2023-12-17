@@ -1,0 +1,4 @@
+{
+	"temp1.txt" : ["primary_coordinator", "secondary_coordinator", "worker"],
+	"somefolder" : ["primary_coordinator", "secondary_coordinator", "worker"]
+}

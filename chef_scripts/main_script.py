@@ -9,9 +9,9 @@ base_dir = "/mnt/c/Users/mehul/OneDrive/Desktop/notepad-plus-dump"
 #defining paths to relevant directories and files
 source_dir = os.path.join(base_dir, "apps/edp/chef_workstation")
 mode, uid, gid = f.get_directory_permissions(source_dir)
-dest_dir = os.path.join(base_dir, "apps")
+dest_dir = os.path.join(base_dir, "apps/edp/chef_workstation")
 sub_dir = "edp"
-delete_info_file=os.path.join(base_dir, "apps/edp/chef_workstation/delete_info.json")
+exclude_info_file=os.path.join(base_dir, "apps/edp/chef_workstation/exclude_info.json")
 role_info_file=os.path.join(base_dir, "apps/edp/chef_workstation/role_info.json")
 mapping_info_file=os.path.join(base_dir, "apps/edp/chef_workstation/templates/mapping.json")
 mapping_role_file=os.path.join(base_dir, "apps/edp/chef_workstation/templates/mapping_template_roles.json")
@@ -41,38 +41,33 @@ logger.addHandler(fh)
 
 rsync_options = "-rlpgoDcvi"
 
-#deleting files from delete_info.json
-deleted_files = f.delete_files(delete_info_file, source_dir, dest_dir, sub_dir)
-if not len(deleted_files) == 0:
-    indented_filenames = ["\t" + filename for filename in deleted_files]
-    indented_files_string = '\n'.join(indented_filenames)
-    logger.info("Files deleted: \n%s", indented_files_string)
-
 # Copy common sub_dir contents to destination sub_dir irrespective of the host
 common_sub_dir = os.path.join(source_dir, "common", sub_dir)
 dest_sub_dir = os.path.join(dest_dir, sub_dir)
 rsync_output_common = f.sync_files(common_sub_dir, dest_sub_dir, rsync_options)
-logger.info("rsync output common: \n%s", f.filter_rsync_output(rsync_output_common))
+#logger.info("rsync output common: \n%s", f.filter_rsync_output(rsync_output_common))
 
 # Copy primary_coordinator sub_dir contents to destination sub_dir if the current host is part of the "primary_coordinator" role
 primary_coordinator_dir = os.path.join(source_dir, "primary_coordinator", sub_dir)
 hostname = f.get_hostname()
 role = f.get_role(hostname, role_info_file)
+f.add_key_value_pair(mapping_info_file, hostname, key="hostname_py")
+f.add_key_value_pair(mapping_info_file, role, key="role_py")
 if role == "primary_coordinator":
     rsync_output_pc = f.sync_files(primary_coordinator_dir, dest_sub_dir, rsync_options)
-    logger.info("rsync output pc: \n%s", f.filter_rsync_output(rsync_output_pc))
+    #logger.info("rsync output pc: \n%s", f.filter_rsync_output(rsync_output_pc))
 
 # Copy secondary_coordinator sub_dir contents to destination sub_dir if the current host is part of the "secondary_coordinator" role
 secondary_coordinator_dir = os.path.join(source_dir, "secondary_coordinator", sub_dir)
 if role == "secondary_coordinator":
     rsync_output_sc = f.sync_files(secondary_coordinator_dir, dest_sub_dir, rsync_options)
-    logger.info("rsync output sc: \n%s", f.filter_rsync_output(rsync_output_sc))
+    #logger.info("rsync output sc: \n%s", f.filter_rsync_output(rsync_output_sc))
     
 # Copy worker sub_dir contents to destination sub_dir if the current host is part of the "worker" role
 worker_dir = os.path.join(source_dir, "worker", sub_dir)
 if role == "worker":
     rsync_output_worker = f.sync_files(worker_dir, dest_sub_dir, rsync_options)
-    logger.info("rsync output worker: \n%s", f.filter_rsync_output(rsync_output_worker))
+    #logger.info("rsync output worker: \n%s", f.filter_rsync_output(rsync_output_worker))
 
 # Process templates sub_dir contents
 templates_dir = os.path.join(source_dir, "templates", sub_dir)
@@ -88,7 +83,7 @@ for root, directories, files in os.walk(parsed_templates_dir):
             template_file = os.path.join(root, filename)
 
             # Replace variables in the template file
-            replaced_template_content = f.parse_template(template_file, role)
+            replaced_template_content = f.parse_template(template_file, role, mapping_info_file)
             # Write the replaced template content to the destination file
             with open(template_file, "w") as file:
                 file.write(replaced_template_content)
@@ -97,6 +92,9 @@ for root, directories, files in os.walk(parsed_templates_dir):
 f.set_permissions_recursively(os.path.join(source_dir, "parsed_templates"), mode, uid, gid)
 # Sync the parsed template directory to the destination directory
 rsync_output_templates = f.sync_files(parsed_templates_dir, dest_sub_dir, rsync_options)
-logger.info("rsync output templates: \n%s", f.filter_rsync_output(rsync_output_templates))
-#shutil.rmtree(os.path.join(source_dir, "parsed_templates"))
+#logger.info("rsync output templates: \n%s", f.filter_rsync_output(rsync_output_templates))
 
+final_dest_dir = os.path.join(base_dir, "apps/edp/test_edp")
+rsync_output = f.rsync_sync_directories(dest_sub_dir, final_dest_dir, exclude_info_file, role, hostname, rsync_options)
+logger.info("rsync output : \n%s", f.filter_rsync_output(rsync_output))
+shutil.rmtree(dest_sub_dir)

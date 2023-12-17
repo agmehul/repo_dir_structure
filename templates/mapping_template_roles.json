@@ -1,0 +1,3 @@
+{
+	"file7.txt" : ["primary_coordinator", "secondary_coordinator", "worker"]
+}

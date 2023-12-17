@@ -1,9 +1,5 @@
 {
-  "variable": 
-  {
-	  "primary_coordinator" : "value_pc",
-	  "secondary_coordinator" : "value_sc",
-	  "worker" : "value_worker"
-  },
-  "hostname" : {}
+    "hello": "world",
+    "hostname_py": "LAPTOP-68NM1KHS",
+    "role_py": "worker"
 }
