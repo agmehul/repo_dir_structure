@@ -1,0 +1,1 @@
+keytool -genkey -keyalg RSA -alias EDPSBUATCoordPrim -keystore keystore12.jks -validity 365 -keysize 2048 -noprompt -storepass your_keystore_password -keypass your_key_password -dname "CN=Your Name, OU=Your Organization, O=Your Company, L=Your City, S=Your State, C=Your Country"
