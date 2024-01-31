@@ -1,0 +1,12 @@
+**Section 2: Use Case and Requirements**
+
+Expanding on our requirements, it's imperative that the alert generation within Splunk provides comprehensive details when multiple sessions match the specified keywords. In such instances, the alert should include information on each matching session, encompassing user ID, system ID, host name where the login occurred, and details on commands executed where the keyword match was identified.
+
+This level of granularity ensures that our monitoring system delivers a thorough overview of all relevant activities, allowing for swift and precise responses to potential security or operational concerns.
+
+Your understanding and attention to this nuanced requirement are highly appreciated.
+
+Best regards,  
+[Your Name]  
+[Your Position]  
+[Your Company]
