@@ -1,0 +1,12 @@
+**Section 4: ESAS Possibility in Place of Splunk**
+
+Considering the critical nature of our business requirements, we explored the possibility of integrating ESAS (Enterprise Security and Analytics Solution) as an alternative to Splunk for PowerBroker logs. Regrettably, the PowerBroker team has explicitly stated that there is no roadmap for ESAS integration in the foreseeable future.
+
+Given this stance and the urgency of our business needs, it's imperative to acknowledge that switching to ESAS for relaying PowerBroker logs is currently unfeasible. We will continue relying on Splunk as our primary platform for this crucial task.
+
+Should there be any developments or changes in the PowerBroker team's approach to ESAS integration, we will reassess our options accordingly.
+
+Best regards,  
+[Your Name]  
+[Your Position]  
+[Your Company]
