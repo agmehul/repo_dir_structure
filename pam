@@ -1,0 +1,24 @@
+Subject: Understanding, Use Case, and Volume of PowerBroker Logs in Splunk Integration
+
+**Section 1: Understanding PowerBroker to Splunk Log Relay**
+
+Dear [Recipient],
+
+I hope this message finds you well. I would like to share my understanding of how PowerBroker logs are currently being relayed to Splunk.
+
+Our logs are organized session-wise, with each session having its dedicated file. Within these files, PowerBroker logs for the respective session are stored. In Splunk, an index is built, capturing essential details such as session information, user ID, system ID used for login, and a link to the PowerBroker logs for comprehensive visibility.
+
+**Section 2: Use Case and Requirement**
+
+Moving forward, our specific use case involves Splunk identifying sessions across all hosts in the Stardust cluster. Splunk will then delve into the PowerBroker log files for these sessions, executing searches for specified keywords. An alert will be generated if any of the provided keywords are present in the logs from any session across the Stardust cluster hosts.
+
+**Section 3: Volume of PowerBroker Logs**
+
+It's crucial to note that the volume of PowerBroker logs is expected to be minimal. These logs primarily document logins to production servers, occurring infrequently due to change implementations and incident resolution. Session sizes are also small, ensuring that the overall volume remains well within acceptable limits and does not surpass any defined requirements.
+
+I look forward to any feedback or clarification regarding these points.
+
+Best regards,
+[Your Name]
+[Your Position]
+[Your Company]
