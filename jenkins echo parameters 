@@ -1,0 +1,10 @@
+You're correct in your observation. My apologies for the confusion. If the script prompts for input multiple times, you should run it once and use pipes to provide all the answers in a single sequence. Here's the corrected example:
+
+```bash
+#!/bin/bash
+
+# Provide all responses to the script's questions in one go
+echo -e "yes\nyour_host_name\nyour_username\nyour_password" | ./original_script.sh
+```
+
+This way, the script is invoked only once, and the answers are piped sequentially to the questions it asks during its execution. Adjust the responses accordingly based on the actual questions asked by your script.
