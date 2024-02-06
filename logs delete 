@@ -1,0 +1,34 @@
+You can achieve this using Python by using the `os` module to list files in the directory, and `os.path` and `datetime` modules to determine their age. Here's how you can do it:
+
+```python
+import os
+import datetime
+
+def delete_old_files(folder_path, days):
+    # Get the current time
+    current_time = datetime.datetime.now()
+
+    # Calculate the cutoff time (3 days ago)
+    cutoff_time = current_time - datetime.timedelta(days=days)
+
+    # Iterate through files in the folder
+    for filename in os.listdir(folder_path):
+        file_path = os.path.join(folder_path, filename)
+
+        # Check if it's a file and if it's older than 3 days
+        if os.path.isfile(file_path):
+            file_time = datetime.datetime.fromtimestamp(os.path.getmtime(file_path))
+            if file_time < cutoff_time:
+                # Delete the file
+                os.remove(file_path)
+                print(f"Deleted: {file_path}")
+
+# Usage
+folder_path = "/path/to/your/folder"
+days = 3
+delete_old_files(folder_path, days)
+```
+
+Replace `"/path/to/your/folder"` with the actual path to your folder and adjust the `days` variable if you want to delete files older than a different number of days. 
+
+Please be cautious when using this script, as it will permanently delete files from the specified folder. Make sure to test it on a small subset of files or in a safe environment first.
