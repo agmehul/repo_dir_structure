@@ -1,0 +1,26 @@
+If you don't want to store credentials in Jenkins and need to mask passwords, you can use the `maskPasswords` step in your pipeline. Here's an example:
+
+```groovy
+pipeline {
+    agent any
+    
+    stages {
+        stage('Example Stage') {
+            steps {
+                script {
+                    // Define your sensitive information
+                    def myPassword = 'mySecretPassword'
+                    
+                    // Mask the password in the build logs
+                    maskPasswords([$class: 'PasswordBuildWrapper', varPasswordPairs: [[password: myPassword, var: 'SECRET_PASSWORD']]])
+
+                    // Now you can use SECRET_PASSWORD in your steps
+                    echo "Password: $SECRET_PASSWORD"
+                }
+            }
+        }
+    }
+}
+```
+
+In this example, the `maskPasswords` step is used to mask the specified password in the build logs. The actual sensitive information is stored in a variable (`myPassword`), and you can use the masked variable (`SECRET_PASSWORD`) in your steps without storing the credentials in Jenkins.
