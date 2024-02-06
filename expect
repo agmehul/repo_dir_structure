@@ -1,0 +1,42 @@
+Sure, you can use the `expect` command to automate interactions with the script. Here's how you can achieve that:
+
+```bash
+#!/usr/bin/expect -f
+
+# Set timeout for expect commands
+set timeout 30
+
+# Spawn the original script
+spawn ./original_script.sh
+
+# Expect the first prompt and send "yes"
+expect "Enter 'yes' to continue or 'no' to cancel:"
+send "yes\n"
+
+# Expect the second prompt and send your host name
+expect "Enter host name:"
+send "your_host_name\n"
+
+# Expect the third prompt and send your username
+expect "Enter username:"
+send "your_username\n"
+
+# Expect the fourth prompt and send your password
+expect "Enter password:"
+send "your_password\n"
+
+# Wait for the script to finish
+expect eof
+```
+
+Save this script as, for example, `automate_script.sh`. Replace "your_host_name," "your_username," and "your_password" with your actual responses.
+
+Make sure you have the `expect` package installed on your system. You can install it using your package manager, such as `apt` for Debian-based systems or `yum` for Red Hat-based systems.
+
+Then, make the script executable using the following command:
+
+```bash
+chmod +x automate_script.sh
+```
+
+Now, when you run `./automate_script.sh`, it will automatically provide the responses to the prompts of the original script using `expect`.
