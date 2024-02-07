@@ -1,0 +1,64 @@
+**Bitbucket Repository Usage Documentation**
+
+---
+
+**1. Common Folder:**
+
+- **Description:** Contains the entire EDP directory.
+- **Usage:** Any file placed in this common folder within the EDP file hierarchy will be mirrored into all nodes of the Starburst cluster.
+
+---
+
+**2. Primary Coordinator Folder:**
+
+- **Description:** Contains the EDP directory.
+- **Usage:** Files placed in this EDP directory will only affect the primary coordinator of the Starburst cluster.
+
+---
+
+**3. Secondary Coordinator Folder:**
+
+- **Description:** Contains the EDP directory.
+- **Usage:** Files placed in this EDP directory will only affect the secondary coordinator of the Starburst cluster.
+
+---
+
+**4. Worker Folder:**
+
+- **Description:** Contains the EDP directory.
+- **Usage:** Files placed in this EDP directory will only affect the workers of the Starburst cluster.
+
+---
+
+**5. Configs:**
+
+- **Description:** Contains configuration-related files essential for configuring the Python script responsible for syncing the Starburst cluster with the Bitbucket repository.
+
+---
+
+**5.1 role_hosts.json:**
+
+- **Function:** Tags server hostnames with their respective roles (primary coordinator, secondary coordinator, or worker).
+- **Usage:**
+  - Servers designated as the primary coordinator are tagged with the primary coordinator role.
+  - Servers designated as the secondary coordinator are tagged with the secondary coordinator role.
+  - Worker servers are tagged with the worker role.
+  - Ensures proper identification of server roles for synchronization purposes between the Starburst cluster and the Bitbucket repository.
+
+**5.2 exclude.json:**
+
+- **Function:** Specifies files and folders to be excluded from synchronization when the Python script syncs content from the Bitbucket repository to the Starburst cluster.
+- **Usage:**
+  - Files and folders listed in this file will not be synced, ensuring exclusion of specified content from the synchronization process.
+
+**5.3 template_roles.json:**
+
+- **Function:** Maps template files to deployment roles within the Starburst cluster.
+- **Usage:**
+  - Each template file is tagged with the role(s) to which it should be deployed.
+  - If a template file is tagged with a specific role, it will be deployed only to servers assigned that role.
+  - Enables targeted deployment of template files based on specified roles within the Starburst cluster.
+
+---
+
+This documentation provides a comprehensive overview of the folder structure and configuration files within the Bitbucket repository, facilitating efficient understanding and utilization by users.
