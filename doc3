@@ -1,0 +1,19 @@
+**6. Templates:**
+
+- **Description:** Contains the EDP directory with template files.
+- **Usage:**
+  - Each template file is placed within the EDP directory following the same file hierarchy.
+  - Templates are customizable versions of basic files, allowing for dynamic content insertion.
+  - Customization of template files occurs in two ways:
+    1. **Key-Value Replacement:**
+       - Template files contain keys that are replaced by their respective values based on the mappings defined in the `mapping.json` file located in the configs folder.
+    2. **Role Tagging:**
+       - Each template file is tagged in the `template_roles.json` file located in the configs folder.
+       - Tagging determines the deployment roles within the Starburst cluster where the template file will be deployed.
+  - Template files can contain sections designated for specific roles, enclosed within triangular brackets with roles specified at the start and `<end>` at the end of each section.
+  - Sections are tagged to be deployed only to roles specified within the brackets.
+  - Facilitates granular control over deployment of template sections within the Starburst cluster.
+
+---
+
+This section provides an updated overview of the template files within the Bitbucket repository, including the newly described section tagging feature for targeted deployment within the Starburst cluster.
