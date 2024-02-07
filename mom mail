@@ -1,0 +1,27 @@
+Sure, here's a structured draft email based on the information you provided:
+
+---
+
+Subject: Summary of Meeting Discussion and Action Items
+
+Hi [Recipient],
+
+I hope this email finds you well. I wanted to provide a summary of our recent meeting where we discussed two key queries and the suggested actions moving forward.
+
+1. **Automation of Certificate Signing Process:**
+   - Current Process: We currently use CertNow to sign certificates. This involves generating a CSR and forwarding it to the RTB team, who then uploads it to CertNow. Upon receiving the signed certificate, we add it to our keystore.
+   - Proposed Solution: The suggestion was to switch over to CSM. I've received documentation from Bhavesh regarding CSM and will review it. I'll reach out if I encounter any difficulties.
+
+2. **Jenkins Access to Production DBP Servers:**
+   - Current Status: We discussed granting Jenkins access to production DBP servers.
+   - Proposed Solution: Bhavesh suggested requesting a new system account for Jenkins, which would have direct SSH access to the production servers.
+   - Action Item: I will be reaching out to Bhavesh for further details on how to raise the request for creating this system account.
+
+I will keep you updated on any progress or developments regarding these matters. Please let me know if you have any questions or need further clarification on any of the points discussed.
+
+Best regards,
+[Your Name]
+
+---
+
+Feel free to adjust any details or add additional information as needed.
