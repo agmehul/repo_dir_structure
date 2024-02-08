@@ -1,0 +1,23 @@
+You can create a Python function to achieve this task using the `shutil` module for copying files. Here's an example function:
+
+```python
+import os
+import shutil
+
+def copy_keystore_to_directory(hostname, keystore_folder_path, certs_directory):
+    keystore_file_path = os.path.join(keystore_folder_path, f"{hostname}.jks")
+    if os.path.isfile(keystore_file_path):
+        shutil.copy(keystore_file_path, certs_directory)
+        print(f"Keystore for {hostname} copied successfully to {certs_directory}.")
+    else:
+        print(f"No keystore found for {hostname} in {keystore_folder_path}.")
+
+# Example usage:
+hostname = "example_host"
+keystore_folder_path = "/path/to/keystores"
+certs_directory = "/path/to/certs"
+
+copy_keystore_to_directory(hostname, keystore_folder_path, certs_directory)
+```
+
+Replace `"/path/to/keystores"`, `"/path/to/certs"`, and `"example_host"` with the actual paths and hostname you're working with. This function will check if a keystore file exists for the provided hostname in the specified keystore folder, and if found, it will copy it to the specified certs directory.
