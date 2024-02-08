@@ -1,0 +1,32 @@
+**7. How to Use This Repository:**
+
+- **Description:** Outlines the steps to utilize the Bitbucket repository for making changes to the configuration of the Starburst cluster.
+
+---
+
+1. **Pull Updates:**
+   - **Purpose:** Ensure the repository is updated with changes from the remote repository to avoid redundancy and maintain a clean commit history.
+   - **Steps:**
+     - Execute `git pull` to fetch and incorporate updates from the remote repository.
+
+2. **Make Changes:**
+   - **Purpose:** Implement changes based on the specified directory usage and requirements.
+   - **Steps:**
+     - Navigate to the relevant directory based on the use case and requirement.
+     - Make necessary changes to files within the directory.
+
+3. **Stage and Commit Changes:**
+   - **Purpose:** Prepare and commit changes with relevant Jira numbers for tracking and documentation purposes.
+   - **Steps:**
+     - Add changes to the staging area using `git add`.
+     - Commit changes with a commit message starting with a valid Jira number.
+       - Example: `git commit -m "ABC-123: Updated configuration files"`
+       
+4. **Push Changes:**
+   - **Purpose:** Upload committed changes to the remote repository for collaboration and version control.
+   - **Steps:**
+     - Push changes to the remote repository using `git push origin master`.
+
+---
+
+This section provides a step-by-step guide for utilizing the Bitbucket repository to make changes to the configuration of the Starburst cluster, ensuring efficient collaboration and version control.
