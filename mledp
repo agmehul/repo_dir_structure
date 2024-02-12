@@ -1,0 +1,3 @@
+Apologies for the oversight. Let me correct that:
+
+Accessing data from on-premises beta sources through Starburst from AWS is technically feasible. However, due to compliance considerations, direct transfer of data from on-premises sources to AWS is restricted. Therefore, Starburst can retrieve data from on-premises resources, allowing you to refine and tailor it as needed. However, accessing the data directly from AWS is not an option given the current compliance constraints.
