@@ -1,0 +1,28 @@
+Got it, let's structure the setup section of your testing documentation:
+
+### Setup Section
+1. **Node Role Verification:**
+   - Verify the role assigned to each node in the Starburst cluster.
+   - Ensure that each node is correctly tagged with its corresponding role (e.g., primary coordinator, secondary coordinator, worker).
+
+2. **Configuration File Syncing:**
+   - Confirm that configuration files are synced to each node based on its assigned role.
+   - Validate that common configuration files are present on all nodes.
+   - Verify that role-specific configuration files are synced only to nodes with corresponding roles.
+
+3. **Categories of Configuration Files:**
+   - Common Category:
+     - Ensure all common configuration files are present on all nodes.
+   - Role-specific Categories (e.g., Primary Coordinator, Secondary Coordinator, Worker):
+     - Validate that configuration files specific to each role are synced to the corresponding nodes.
+  
+4. **Template Category Testing:**
+   - Note: Testing of the templates category will be handled separately.
+
+5. **Evidence Collection:**
+   - Include screenshots or logs indicating:
+     - Node roles and tags.
+     - Presence of common configuration files on all nodes.
+     - Role-specific configuration files synced to corresponding nodes.
+
+This setup section will focus on ensuring that configuration files are properly synced to each node based on its assigned role in the Starburst cluster. Once you've documented this section, we can proceed with further sections of the testing documentation.
