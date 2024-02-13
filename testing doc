@@ -1,0 +1,26 @@
+Certainly, let's structure the logging section of your testing documentation with the features you've outlined:
+
+### Logging Section
+1. **Directory Path Verification:**
+   - Ensure the directory path of the log file exists.
+   - Verify correct permissions and ownership for the directory.
+
+2. **Log File Naming Convention:**
+   - Validate that the log file name follows the specified template.
+   - Confirm expected permissions and ownership for the log file.
+
+3. **Log Rotation and Cleanup:**
+   - Test the functionality to delete logs older than 3 days.
+   - Verify proper functioning of log rotation mechanism.
+
+4. **Log Content Verification:**
+   - Validate log content follows specified template syntax.
+   - Confirm logs accurately list file names changed or synced by the Python script.
+
+5. **Evidence Collection:**
+   - Include screenshots of:
+     - Directory path, displaying permissions and ownership.
+     - Log file name, displaying permissions and ownership.
+     - Contents of the log file, highlighting the template syntax and listed file names.
+
+These sections comprehensively cover the testing objectives for the logging functionality of your Python script. Once you've documented this section, we can move forward with adding additional sections to the testing documentation.
