@@ -1,0 +1,24 @@
+Got it, let's structure the templates section of your testing documentation:
+
+### Templates Section
+1. **Template Role Attachment:**
+   - Verify that templates are attached to specific roles.
+   - Confirm that templates are deployed only to nodes with corresponding roles.
+
+2. **Template Mappings:**
+   - Ensure key-value pairs in templates are correctly mapped upon deployment.
+   - Validate that the mappings.json file is populated with the correct key-value pairs.
+     - Automatic population by the Python script.
+     - Manual addition of necessary key-value pairs.
+
+3. **Template Sections for Specific Roles:**
+   - Check if sections within templates targeted for specific roles are deployed as expected.
+
+### Evidences:
+- Screenshots or logs indicating:
+  - Templates attached to roles.
+  - Deployment of templates to corresponding nodes.
+  - Populated mappings.json file with correct key-value pairs.
+  - Sections within templates deployed to specific roles.
+
+These sections cover the testing objectives for the templates functionality of your Python script. Once you've documented this section, we can proceed with further sections or adjustments as needed.
