@@ -1,0 +1,36 @@
+Certainly! Here's a function that specifically checks for the existence of a word enclosed within triangular brackets and raises an error if it does not exist in the mapping:
+
+```python
+import re
+import json
+
+def check_mapping(word):
+    # Load the mapping from the JSON file
+    with open('mapping.json', 'r') as file:
+        mapping = json.load(file)
+    
+    # Check if the word exists in the mapping
+    if word in mapping:
+        return True
+    else:
+        raise ValueError(f"The mapping corresponding to '{word}' does not exist in the mapping.json file")
+
+def check_word_in_brackets(text):
+    # Regular expression to find words enclosed within triangular brackets
+    pattern = r'<(.*?)>'
+    matches = re.findall(pattern, text)
+    
+    for match in matches:
+        try:
+            check_mapping(match)
+        except ValueError as e:
+            raise ValueError(f"{e.args[0]} for '{match}'")
+    
+# Example usage:
+try:
+    check_word_in_brackets("This is a <word> and another <apple>")
+except ValueError as e:
+    print(e)
+```
+
+This function `check_word_in_brackets` searches for words enclosed within triangular brackets and checks if they exist in the mapping. If not, it raises a ValueError with the appropriate error message mentioning the word that doesn't exist in the mapping.
