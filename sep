@@ -1,0 +1,19 @@
+Here's a simple Python function that takes the path to a directory and a new name for the directory, and renames the directory:
+
+```python
+import os
+
+def rename_directory(path, new_name):
+    try:
+        os.rename(path, os.path.join(os.path.dirname(path), new_name))
+        print(f"Directory renamed successfully to {new_name}")
+    except OSError as e:
+        print(f"Error: {e}")
+
+# Example usage:
+directory_path = "/path/to/your/directory"
+new_directory_name = "new_name"
+rename_directory(directory_path, new_directory_name)
+```
+
+Replace `"/path/to/your/directory"` with the actual path to the directory you want to rename, and `"new_name"` with the new name you want to assign to the directory. This function will handle the renaming process and print a success message or an error message if renaming fails.
