@@ -1,0 +1,29 @@
+To create a Chef resource that places the Python script file at the specified directory, triggers it, and then deletes it, you can use the `cookbook_file` and `execute` resources. Here's how you can do it in your recipe:
+
+```ruby
+# Place the Python script file at the specified directory
+cookbook_file '/path/to/destination/my_script.py' do
+  source 'my_script.py'
+  mode '0755'
+end
+
+# Trigger the Python script
+execute 'run_my_script' do
+  command 'python /path/to/destination/my_script.py <parameter>'
+  action :run
+end
+
+# Delete the Python script file
+file '/path/to/destination/my_script.py' do
+  action :delete
+end
+```
+
+Replace `'/path/to/destination/my_script.py'` with the actual path where you want to place the script on the target node. Ensure to set the appropriate permissions using the `mode` attribute in the `cookbook_file` resource.
+
+Replace `<parameter>` in the `command` attribute of the `execute` resource with the actual parameter you want to pass to your Python script.
+
+This code will:
+1. Place the Python script file at the specified directory.
+2. Trigger the Python script with the specified parameter.
+3. Delete the Python script file after it has been executed.
