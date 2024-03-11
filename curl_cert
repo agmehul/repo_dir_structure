@@ -1,0 +1,23 @@
+You can use the `subprocess` module in Python to run the `curl` command and capture its output. Here's how you can modify the previous Python code to do that:
+
+```python
+import json
+import subprocess
+
+# Run the curl command and capture its output
+curl_command = "curl <your_curl_command_here>"
+curl_output = subprocess.check_output(curl_command, shell=True)
+
+# Decode the output if necessary (assuming it's in bytes)
+curl_output_decoded = curl_output.decode("utf-8")
+
+# Parse the JSON string
+data = json.loads(curl_output_decoded)
+
+# Extract the desired value
+first_pem_value = data.get("current_chain", [{}])[0].get("pem", None)
+
+print(first_pem_value)
+```
+
+Replace `<your_curl_command_here>` with your actual `curl` command. This code will run the `curl` command, capture its output, decode it if necessary, parse the JSON string, and then extract the desired value as before.
