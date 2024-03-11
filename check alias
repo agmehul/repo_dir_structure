@@ -1,0 +1,27 @@
+You can achieve this in Python by using the `subprocess` module to run the `keytool` command and the `os.path` module to check if the alias exists in the truststore. Here's a basic example of how you can do this:
+
+```python
+import subprocess
+import os
+
+def check_alias_existence(alias, truststore_path):
+    try:
+        subprocess.run(['keytool', '-list', '-keystore', truststore_path, '-alias', alias], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        return True  # Alias exists
+    except subprocess.CalledProcessError:
+        return False  # Alias does not exist
+
+def import_cert_if_not_exists(alias, cert_file, keystore_path, truststore_path):
+    if not check_alias_existence(alias, truststore_path):
+        subprocess.run(['keytool', 'import', '-alias', alias, '-file', cert_file, '-keystore', keystore_path], check=True)
+
+# Example usage
+alias = "csmroot"
+cert_file = "csmroot.crt"
+keystore_path = "truststorecsm.jks"
+truststore_path = "csm.jks"
+
+import_cert_if_not_exists(alias, cert_file, keystore_path, truststore_path)
+```
+
+Replace `"csmroot"`, `"csmroot.crt"`, `"truststorecsm.jks"`, and `"csm.jks"` with your actual alias, certificate file, keystore path, and truststore path respectively. This code will only import the certificate if the alias does not already exist in the truststore.
