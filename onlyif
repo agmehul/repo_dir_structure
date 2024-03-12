@@ -1,0 +1,13 @@
+In Chef, you can use guards to add conditions to resources. To ensure that a resource only runs if a particular file does not exist, you can use the `not_if` or `only_if` guard with a Ruby block. Here's an example:
+
+```ruby
+file '/path/to/output/file' do
+  content 'This is some content'
+  action :create
+  not_if { ::File.exist?('/path/to/input/file') } # This resource will only run if the input file does not exist
+end
+```
+
+In this example, the `file` resource will only be executed if the input file at `/path/to/input/file` does not exist. You can adjust the file paths and conditions according to your specific requirements.
+
+Remember to replace `/path/to/input/file` with the actual path of the file you want to check for existence.
